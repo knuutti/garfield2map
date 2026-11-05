@@ -1,0 +1,444 @@
+/* The map, the sidebar and the object panel. */
+
+:root {
+	--nav-bg: #11151f;
+	--nav-panel: #181e2b;
+	--nav-raised: #212a3b;
+	--nav-border: #2c3649;
+	--nav-text: #e9edf5;
+	--nav-muted: #9ba6ba;
+	--nav-accent: #f2c14e;
+	--nav-accent-text: #1b1606;
+	--nav-font: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', system-ui, sans-serif;
+	--sidebar-width: 300px;
+	--object-panel-width: 260px;
+	--rail-width: 48px;
+}
+
+body {
+	margin: 0;
+}
+
+/* --- page layout ------------------------------------------------------- */
+
+#map-view {
+	position: relative;
+	display: flex;
+	height: 100vh;
+	height: 100dvh;
+}
+
+#map {
+	flex: 1;
+	min-width: 0;
+	height: 100%;
+	/* dark like the maps, so any gap between tiles doesn't show as a light line */
+	background: var(--nav-bg);
+}
+
+#sidebar, #sidebar *, #object-panel, #object-panel * {
+	font-family: var(--nav-font);
+	box-sizing: border-box;
+}
+
+#sidebar a {
+	color: inherit;
+}
+
+#sidebar :focus-visible, #object-panel :focus-visible {
+	outline: 2px solid var(--nav-accent);
+	outline-offset: 2px;
+}
+
+.brand {
+	margin: 0 0 8px;
+	font-size: 1.4rem;
+	font-weight: bold;
+	letter-spacing: 0.04em;
+	color: var(--nav-accent);
+}
+
+.empty {
+	color: var(--nav-muted);
+}
+
+input.search {
+	width: 100%;
+	padding: 8px 10px;
+	font-size: 1rem;
+	color: var(--nav-text);
+	background: var(--nav-raised);
+	border: 1px solid var(--nav-border);
+	border-radius: 8px;
+}
+
+input.search::placeholder {
+	color: var(--nav-muted);
+}
+
+/* --- on the map --------------------------------------------------------- */
+
+.mouseposition {
+	background-color: rgba(255, 255, 255, .8);
+	padding: 2px 5px;
+	border-radius: 5px;
+	box-shadow: rgba(0, 0, 0, .2) 2px 2px 4px;
+}
+
+.leaflet-popup h1 {
+	margin: 4px 0;
+	text-align: center;
+}
+
+.leaflet-popup p {
+	font-family: monospace;
+	font-size: 1.2em;
+	margin: 6px 0;
+}
+
+.leaflet-popup-content {
+	width: 400px;
+	overflow-y: auto;
+	max-height: 80vh;
+}
+
+.popup-map-link {
+	font-weight: bold;
+}
+
+.emphasize {
+	font-weight: bold;
+}
+
+.leaflet-draw-actions a {
+	color: white;
+}
+
+.distance {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+.distance li:first-child {
+	padding: 0;
+}
+
+.distance li {
+	padding-left: 20px;
+}
+
+input[type=color] {
+	margin: 0px 2px;
+	width: 30px;
+}
+
+pre {
+	font-family: monospace;
+}
+
+/* --- sidebar ------------------------------------------------------------ */
+
+#sidebar {
+	position: relative;
+	z-index: 1100;
+	display: flex;
+	flex: none;
+	color: var(--nav-text);
+	background: var(--nav-panel);
+	border-right: 1px solid var(--nav-border);
+}
+
+.sidebar-rail {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	width: var(--rail-width);
+	padding: 8px 6px;
+	border-right: 1px solid var(--nav-border);
+}
+
+.icon-button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 36px;
+	height: 36px;
+	padding: 0;
+	border: 0;
+	border-radius: 8px;
+	background: transparent;
+	color: var(--nav-text);
+	cursor: pointer;
+}
+
+.icon-button:hover {
+	background: var(--nav-raised);
+}
+
+#sidebar svg, #object-panel svg {
+	width: 20px;
+	height: 20px;
+	flex: none;
+	fill: none;
+	stroke: currentColor;
+	stroke-width: 2;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+}
+
+.sidebar-panel {
+	display: flex;
+	flex-direction: column;
+	width: var(--sidebar-width);
+	padding: 12px 14px 0;
+	overflow: hidden;
+}
+
+#sidebar.collapsed .sidebar-panel {
+	display: none;
+}
+
+.map-list {
+	flex: 1;
+	overflow-y: auto;
+	margin: 0 -14px;
+	padding: 0 14px 16px;
+}
+
+.map-list h2 {
+	margin: 12px 0 4px;
+	font-size: 0.85rem;
+	font-weight: normal;
+	color: var(--nav-muted);
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+}
+
+.map-list ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.map-list a {
+	display: block;
+	padding: 6px 10px;
+	border-radius: 6px;
+	text-decoration: none;
+}
+
+.map-list a:hover {
+	background: var(--nav-raised);
+}
+
+.map-list a[aria-current] {
+	background: var(--nav-accent);
+	color: var(--nav-accent-text) !important;
+	font-weight: bold;
+}
+
+/* --- object panel ---------------------------------------------------- */
+
+#object-panel {
+	position: relative;
+	z-index: 1100;
+	display: flex;
+	flex: none;
+	color: var(--nav-text);
+}
+
+.object-panel-body {
+	display: flex;
+	flex-direction: column;
+	width: var(--object-panel-width);
+	padding: 12px 14px 0;
+	background: var(--nav-panel);
+	border-left: 1px solid var(--nav-border);
+}
+
+#object-panel.collapsed .object-panel-body {
+	display: none;
+}
+
+.object-panel-open {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	display: none;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 12px;
+	font-size: 0.95rem;
+	color: var(--nav-text);
+	background: var(--nav-panel);
+	border: 1px solid var(--nav-border);
+	border-radius: 8px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+	cursor: pointer;
+	white-space: nowrap;
+}
+
+.object-panel-open:hover {
+	background: var(--nav-raised);
+}
+
+#object-panel.collapsed .object-panel-open {
+	display: flex;
+}
+
+.object-panel-badge {
+	min-width: 20px;
+	padding: 1px 6px;
+	border-radius: 10px;
+	font-size: 0.8rem;
+	font-weight: bold;
+	text-align: center;
+	color: var(--nav-accent-text);
+	background: var(--nav-accent);
+}
+
+.object-panel-badge:empty {
+	display: none;
+}
+
+.object-panel-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.object-panel-header h2 {
+	margin: 0;
+	font-size: 1.25rem;
+}
+
+.object-panel-body input.search {
+	margin: 10px 0 6px;
+}
+
+.object-panel-summary {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 4px 0 8px;
+	color: var(--nav-muted);
+	font-size: 0.9rem;
+}
+
+.object-panel-summary[hidden] {
+	display: none;
+}
+
+.object-panel-clear {
+	padding: 0;
+	border: 0;
+	background: none;
+	color: var(--nav-accent);
+	font-size: 0.9rem;
+	cursor: pointer;
+}
+
+.object-panel-clear:hover {
+	text-decoration: underline;
+}
+
+.object-list {
+	flex: 1;
+	overflow-y: auto;
+	margin: 0 -14px;
+	padding: 0 8px 16px;
+}
+
+.object-row {
+	/* keeps the hidden checkbox inside the scrolling list */
+	position: relative;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 7px 8px;
+	border-radius: 8px;
+	cursor: pointer;
+	user-select: none;
+}
+
+.object-row[hidden] {
+	display: none;
+}
+
+.object-row:hover {
+	background: var(--nav-raised);
+}
+
+.object-row.on {
+	background: var(--nav-raised);
+}
+
+.object-row input {
+	position: absolute;
+	opacity: 0;
+	pointer-events: none;
+}
+
+/* the swatch is the checkbox: an outline when off, filled when on */
+.object-swatch {
+	flex: none;
+	width: 14px;
+	height: 14px;
+	border: 2px solid var(--swatch);
+	border-radius: 4px;
+}
+
+.object-row.on .object-swatch {
+	background: var(--swatch);
+}
+
+.object-row input:focus-visible + .object-swatch {
+	outline: 2px solid var(--nav-accent);
+	outline-offset: 2px;
+}
+
+.object-name {
+	flex: 1;
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.object-count {
+	color: var(--nav-muted);
+	font-size: 0.85rem;
+	font-variant-numeric: tabular-nums;
+}
+
+.object-panel-body .empty {
+	margin: 6px 0;
+}
+
+.object-panel-body .empty:empty {
+	display: none;
+}
+
+/* Phones: the panels open over the map instead of beside it. */
+@media (max-width: 700px) {
+	.object-panel-body {
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		width: min(var(--object-panel-width), 100vw);
+		box-shadow: -4px 0 16px rgba(0, 0, 0, 0.4);
+	}
+
+	.sidebar-panel {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: var(--rail-width);
+		width: min(var(--sidebar-width), calc(100vw - var(--rail-width)));
+		background: var(--nav-panel);
+		border-right: 1px solid var(--nav-border);
+		box-shadow: 4px 0 16px rgba(0, 0, 0, 0.4);
+	}
+}
