@@ -6,7 +6,7 @@ with its map list and object panel.
 
 ## Running locally
 
-The page loads its data with `fetch`, so serve the folder over HTTP:
+The page loads its data with `fetch`, so serve the folder over HTTP
 
 ```
 python3 -m http.server
